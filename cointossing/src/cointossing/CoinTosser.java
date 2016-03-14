@@ -2,12 +2,25 @@ package cointossing;
 
 import java.util.Random;
 
-public class CoinTosser {
+
+/**
+ * A class that simulates a sequence of coin tosses.
+ * Alice wins, when Tail follows Head
+ * Bob wins, when Head follows Head
+ * The average counts are the counts of tosses, Alice and Bob needed to win.
+ * @author jhermes
+ *
+ */
+public class CoinTosser{
 	
 	private int n=1;
 	private double alicesAverage =0.0;
 	private double bobsAverage =0.0;
 
+	/**
+	 * Tosses a coin until each Alice and Bob win the round for i rounds
+	 * @param i Number of rounds
+	 */
 	public void tossCoin(int i) {
 		Random random = new Random(0);
 		for(;n<i;n++){
@@ -47,10 +60,16 @@ public class CoinTosser {
 		}
 	}
 
+	/** Returns the average tosses Alice needed to win
+	 * @return average tosses Alice needed to win
+	 */
 	public double getAlicesTossesCount() {
 		return alicesAverage;
 	}
 
+	/** Returns the average tosses Bob needed to win
+	 * @return average tosses Bob needed to win
+	 */
 	public double getBobsTossesCount() {
 		return bobsAverage;
 	}
