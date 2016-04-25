@@ -16,11 +16,13 @@ public class RussianRoulette {
 		Random random = new Random(0);
 		for(int i=0; i<rounds; i++){
 			for(int j=0; j<participants;j++){
-				if(random.nextInt()==1){
-					dead.set(j, dead.get(j)+1);
+				int fire = random.nextInt(); 
+				if(fire==0){
+					int deaths = dead.get(j)+1;
+					dead.set(j, deaths);
 					alreadyDead++;
 					if(participants==alreadyDead){
-						break;
+						continue;
 					}
 				}
 			}
