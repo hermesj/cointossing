@@ -16,6 +16,7 @@ public class CoinTosser{
 	private int n=1;
 	private double alicesAverage =0.0;
 	private double bobsAverage =0.0;
+	
 
 	/**
 	 * Tosses a coin until each Alice and Bob win the round for i rounds
@@ -56,6 +57,30 @@ public class CoinTosser{
 					
 				}
 				tosses++;
+			}
+		}
+	}
+	
+	public void contest(int games){
+		Random random = new Random(0);
+		for(int i=0; i<games; i++){
+			boolean previousHead= false;
+			while(true){
+				boolean head = random.nextBoolean();
+				if(head){
+					if(previousHead){
+						bobsAverage+=1.0;
+						break;
+					}
+					previousHead = true;
+				}
+				else{
+					if(previousHead){
+						alicesAverage+=1.0;
+						break;
+					}
+					previousHead = false;
+				}
 			}
 		}
 	}
