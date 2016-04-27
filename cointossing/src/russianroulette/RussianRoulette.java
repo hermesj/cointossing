@@ -16,13 +16,13 @@ public class RussianRoulette {
 		Random random = new Random(0);
 		for(int i=0; i<rounds; i++){
 			for(int j=0; j<participants;j++){
-				int fire = random.nextInt(); 
+				int fire = random.nextInt(6); 
 				if(fire==0){
 					int deaths = dead.get(j)+1;
 					dead.set(j, deaths);
 					alreadyDead++;
-					if(participants==alreadyDead){
-						continue;
+					if(participants-1==alreadyDead){
+						break;
 					}
 				}
 			}
@@ -32,12 +32,12 @@ public class RussianRoulette {
 		}
 	}
 	
-	public static void runRR(){
+	public static void runRR(int rounds){
 		double aliceDead = 0.0;
 		double bobDead = 0.0;
 		double ongoingGame = 1 - aliceDead - bobDead;
 		System.out.println("Round \tAlice dies \t\tAlice dead \t\tBob dies \t\tBob dead \t\tOngoing game");
-		for(int i=0; i<15; i++){
+		for(int i=0; i<rounds; i++){
 			double aliceDies = ongoingGame * (1.0/6.0);
 			aliceDead += aliceDies;
 			ongoingGame = 1 - aliceDead - bobDead;
