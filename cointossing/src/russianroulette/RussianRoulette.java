@@ -80,15 +80,54 @@ public class RussianRoulette {
 		
 	}
 	
+	public static double getOngoingGameProb(int participants, int round){
+		System.out.println("Part: " + participants + " round: " + round);
+		if(round<participants){
+			return 1.0;
+		}
+		double ongoingGameProb = 0.0;
+		for(int i=0; i<participants; i++){
+			long binom = binom(round,i);
+			double iProb = binom * Math.pow((1.0/6.0), i) * Math.pow((5.0/6.0), round-i);
+			System.out.println(iProb);
+			ongoingGameProb+=iProb;
+		}
+		System.out.println("Returning: " + ongoingGameProb);
+		return ongoingGameProb;
+	}
+	
+	public static long binom(int n, final int k) {
+	    final int min = (k < n - k ? k : n - k);
+	    long bin = 1;
+	    for (int i = 1; i <= min; i++) {
+	      bin *= n;
+	      // geht immer genau, da n * (n-1) * ... immer durch das
+	      // entsprechende i teilbar ist
+	      bin /= i;
+	      n--;
+	    }
+	    return bin;
+	 }
+	//p(0) = (n über 0) * (1/6)^0 * (5/6)^(n-0)
+		//	P(1) = (n über 1) * (1/6)^1 * (5/6)^(n-1)
+			//p(2) = (n über 2) * (1/6)^2 * (5/6)^(n-2)
+			//p(k) = (n über k) * (1/6)^k * (5/6)^(n-k)
+			//p(8) = (n über 8) * (1/6)^8 * (5/6)^(n-8)
+
+
+	
 	public static void runRRBloody(int participants, int rounds){
 		List<List<Double>> dyingProbs = new LinkedList<List<Double>>();
 		for(int i=0; i<participants; i++){
 			dyingProbs.add(new ArrayList<Double>());
 		}
 		double ongoingGame = 1.0;
-		
+		int j=0;
 		for(int i=0; i<rounds; i++){
+			
 			for (List<Double> list : dyingProbs) {
+				j++;
+				ongoingGame = getOngoingGameProb(participants, j);
 				double someoneDies = ongoingGame * (1.0/6.0);
 				if(i==0){
 					list.add(someoneDies);
@@ -96,8 +135,8 @@ public class RussianRoulette {
 				else{
 					list.add(list.get(i-1) + someoneDies);
 				}
-				if(participants==1)
-				ongoingGame -= someoneDies;				
+				//if(participants==1)
+				//ongoingGame -= someoneDies;				
 			}
 		}	
 		int i=1;
